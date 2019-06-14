@@ -39,8 +39,12 @@ Example of JSON payload for such configuration in case of 'field' parameter of P
 }
 ````
 
+Using with prefetch for amqp_input notifyComplete should be used as last called command in the chain
+and amqp_input config should have positiv int as prefetch value
+
 Commands list:
 ````
 uploadFile();
 downloadFile();
+notifyComplete();
 ````
