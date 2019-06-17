@@ -1,12 +1,12 @@
-Upload and check file command plugin
+Download and check file command plugin
 ---
 
 Config example:
 ````
 "@voicenter/voicenter_pastash_command_fileupload": {
-    "pluginFieldName": "FileTransfer",  // Host parameter name for particular plugin
-    "uploadInputFileField": "uploadSourceFilePath", // Input file path for upload. 
-    "uploadOutputFileField": "uploadDestFilePath",  // Output file path for upload.
+    "pluginFieldName": "FileTransferDown",  // Host parameter name for particular plugin
+    "downloadInputFileField": "downloadSourceFilePath", // Input file path for download. 
+    "downloadOutputFileField": "downloadDestFilePath",  // Output file path for download.
     "nameField": "fileName", // File name
     "sizeField": "fileSize", // File size for checking
     
@@ -24,9 +24,10 @@ Example of JSON payload for such configuration in case of 'field' parameter of P
 {
   "@timestamp": "4200000000",
   "Command": {
-    "FileTransferUp": {
-      "uploadSourceFilePath": "/local/path",
-      "uploadDestFilePath": "/remote/path",
+    "FileTransferDown": {
+      "downloadSourceFilePath": "/remote/path",
+      "downloadDestFilePath": "/local/path",
+
       "fileName": "file.name",
       "fileSize": "42"
     }
@@ -36,5 +37,5 @@ Example of JSON payload for such configuration in case of 'field' parameter of P
 
 Commands list:
 ````
-uploadFile();
+downloadFile();
 ````
