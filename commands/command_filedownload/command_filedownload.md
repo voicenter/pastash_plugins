@@ -5,10 +5,9 @@ Config example:
 ````
 "@voicenter/voicenter_pastash_command_fileupload": {
     "pluginFieldName": "FileTransferDown",  // Host parameter name for particular plugin
-    "downloadInputFileField": "downloadSourceFilePath", // Input file path for download. 
-    "downloadOutputFileField": "downloadDestFilePath",  // Output file path for download.
-    "nameField": "fileName", // File name
-    "sizeField": "fileSize", // File size for checking
+    "inputFileField": "downloadSourceFilePath", // Input file path for download. 
+    "outputFileField": "downloadDestFilePath",  // Output file path for download.
+    "nameField": "fileName", // File name input field name
     
     // FTP params
     "host": "host",
@@ -27,9 +26,7 @@ Example of JSON payload for such configuration in case of 'field' parameter of P
     "FileTransferDown": {
       "downloadSourceFilePath": "/remote/path",
       "downloadDestFilePath": "/local/path",
-
-      "fileName": "file.name",
-      "fileSize": "42"
+      "fileName": "file.name"
     }
   }
 }
