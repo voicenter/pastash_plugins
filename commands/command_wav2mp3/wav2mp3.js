@@ -57,6 +57,7 @@ module.exports = function plugin(userConf) {
         })
         .finally(() => {
           f_counter.dec();
+          fs.unlink(source, function() {});
           logger.info('File converted.', conf.pluginFieldName);
           next();
         });

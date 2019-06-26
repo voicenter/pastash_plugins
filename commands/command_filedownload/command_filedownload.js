@@ -72,7 +72,7 @@ module.exports = function plugin(userConf) {
         .finally(() => {
           f_counter.dec();
           ftp.close();
-          logger.info('Download file.', conf.pluginFieldName);
+          logger.info('Downloaded a file.', conf.pluginFieldName);
           next();
         });
     } else {
