@@ -38,11 +38,13 @@ module.exports = function plugin(userConf) {
 
   this.main.decryptFile = function decryptFile(next) {
     const data = this.data[conf.pluginFieldName];
+      f_counter.inc();
     encryptor.decryptFile(data[conf.inputFileField], data[conf.outputFileField], data[conf.keyField], options, (err) => {
       this.data.Result.push({
         plugin: conf.pluginFieldName,
         response: err ? 500 : 200
       });
+      f_counter.dec();
       next();
     });
   };
