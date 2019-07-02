@@ -21,14 +21,14 @@ module.exports = function plugin(userConf) {
 
   let probe = pmx.probe();
   let f_counter = probe.counter({
-    name : 'Uploading files by ftp'
+    name: 'Uploading files by ftp'
   });
 
   this.main.uploadFile = function uploadFile(next) {
     const data = this.data[conf.pluginFieldName];
 
     if (data.hasOwnProperty(conf.inputFileField) && data.hasOwnProperty(conf.outputFileField)) {
-      let source      = data[conf.inputFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField];
+      let source = data[conf.inputFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField];
       let destination = data[conf.outputFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField];
 
       const ftp = new basicFtp.Client();
@@ -37,7 +37,10 @@ module.exports = function plugin(userConf) {
         port: conf.port,
         user: conf.username,
         password: conf.password,
-        secure: conf.secure
+        secure: conf.secure,
+        secureOptions: {
+          host: data[conf.ftpServer] || conf.host
+        }
       })
         .then(() => {
           f_counter.inc();
@@ -60,7 +63,8 @@ module.exports = function plugin(userConf) {
             plugin: conf.pluginFieldName,
             response: 200
           });
-          fs.unlink(source, () => {});
+          fs.unlink(source, () => {
+          });
         })
         .catch((err) => {
           this.data.Result.push({
@@ -68,7 +72,7 @@ module.exports = function plugin(userConf) {
             response: 500
           });
           delete(this.data._operationId);
-          logger.error('Uploading by ftp: Failed on file download.');
+          logger.error('Uploading by ftp: Failed on file upload.');
         })
         .finally(() => {
           f_counter.dec();

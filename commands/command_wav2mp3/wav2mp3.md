@@ -1,6 +1,9 @@
 Wav to Mp3 conversion wrapper for Sound eXchange command line utility (sox).
 ---
 
+Required system packages:
+sox, libsox-fmt-mp3
+
 Config example:
 ````
 "@voicenter/voicenter_pastash_command_wav2mp3": {

@@ -37,7 +37,10 @@ module.exports = function plugin(userConf) {
         port: conf.port,
         user: conf.username,
         password: conf.password,
-        secure: conf.secure
+        secure: conf.secure,
+        secureOptions: {
+          host: data[conf.ftpServer] || conf.host
+        }
       })
         .then(() => {
           f_counter.inc();
