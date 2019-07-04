@@ -2,7 +2,9 @@
  * API data layer for PaStash Commands
  */
 
-const https = require('http');
+const http = require('http');
+const https = require('https');
+const { URL } = require('url');
 const pmx = require('pmx');
 let conf;
 const defaultConf = {
@@ -22,8 +24,15 @@ module.exports = function plugin(userConf) {
     const data = this.data[conf.pluginFieldName];
     f_counter.inc();
     let apiData = '';
+
     // ToDo: Implement different auth methods (sid, jwt...)
-    https.get(data[conf.apiUrlField]+'?api-key='+data[conf.apiKeyField], (res) => {
+
+    let apiUrl = new URL(data[conf.apiUrlField]);
+    apiUrl.searchParams.append('api-key', data[conf.apiKeyField]);
+
+    let connection = (apiUrl.protocol === 'https:') ? https : http;
+
+    connection.get(apiUrl.href, (res) => {
       res.on('data', (chunk) => {
         apiData += chunk;
       });
