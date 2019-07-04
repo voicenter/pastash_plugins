@@ -29,17 +29,20 @@ module.exports = function plugin(userConf) {
 
     let apiUrl = new URL(data[conf.apiUrlField]);
     apiUrl.searchParams.append('api-key', data[conf.apiKeyField]);
+    let headers = {
+      "Authorization": "Bearer " + data[conf.apiKeyField]
+    };
 
     let connection = (apiUrl.protocol === 'https:') ? https : http;
 
-    connection.get(apiUrl.href, (res) => {
+    connection.get(apiUrl.href, { headers: headers }, (res) => {
       res.on('data', (chunk) => {
         apiData += chunk;
       });
 
       res.on('end', () => {
         let apiDataValue = JSON.parse(apiData);
-        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = apiDataValue;
+        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = apiDataValue[data[conf.apiValueField]];
         this.data.Result.push({
           plugin: conf.pluginFieldName,
           response: 200

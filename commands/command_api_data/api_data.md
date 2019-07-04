@@ -1,5 +1,7 @@
 API Connector command plugin
 ---
+API Connector can add or replace input parameter of following command with a value retrieved via web api.
+
 
 Config example:
 ````
@@ -7,6 +9,7 @@ Config example:
     "pluginFieldName": "APIData",
     "apiKeyField": "apiKey",
     "apiUrlField": "apiUrl",
+    "apiValueField": "apiValueKey",
     "forPluginNameField": "pluginName",
     "forPluginDataNameField": "pluginData"
 }
