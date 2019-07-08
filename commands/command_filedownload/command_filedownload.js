@@ -63,6 +63,7 @@ module.exports = function plugin(userConf) {
             plugin: conf.pluginFieldName,
             response: 200
           });
+          logger.info('Downloaded a file.', conf.pluginFieldName);
         })
         .catch((err) => {
           this.data.Result.push({
@@ -75,7 +76,6 @@ module.exports = function plugin(userConf) {
         .finally(() => {
           f_counter.dec();
           ftp.close();
-          logger.info('Downloaded a file.', conf.pluginFieldName);
           next();
         });
     } else {

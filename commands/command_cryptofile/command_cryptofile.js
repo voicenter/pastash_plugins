@@ -23,29 +23,31 @@ module.exports = function plugin(userConf) {
     algorithm: conf.algorithm,
   };
 
+  function _done (err, next) {
+    this.data.Result.push({
+      plugin: conf.pluginFieldName,
+      response: err ? 500 : 200
+    });
+    if (err) {
+      delete(this.data._operationId);
+    }
+    f_counter.dec();
+    next();
+  }
+
   this.main.encryptFile = function encryptFile(next) {
     const data = this.data[conf.pluginFieldName];
     f_counter.inc();
     encryptor.encryptFile(data[conf.inputFileField], data[conf.outputFileField], data[conf.keyField], options, (err) => {
-      this.data.Result.push({
-        plugin: conf.pluginFieldName,
-        response: err ? 500 : 200
-      });
-      f_counter.dec();
-      next();
+      _done(err, next);
     });
   };
 
   this.main.decryptFile = function decryptFile(next) {
     const data = this.data[conf.pluginFieldName];
-      f_counter.inc();
+    f_counter.inc();
     encryptor.decryptFile(data[conf.inputFileField], data[conf.outputFileField], data[conf.keyField], options, (err) => {
-      this.data.Result.push({
-        plugin: conf.pluginFieldName,
-        response: err ? 500 : 200
-      });
-      f_counter.dec();
-      next();
+      _done(err, next);
     });
   };
 };
