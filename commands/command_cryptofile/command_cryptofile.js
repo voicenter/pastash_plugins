@@ -32,6 +32,7 @@ module.exports = function plugin(userConf) {
       delete(this.data._operationId);
     }
     f_counter.dec();
+    fs.unlink(this.data[conf.pluginFieldName][conf.inputFileField], function() {});
     next();
   }
 

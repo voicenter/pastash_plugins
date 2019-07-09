@@ -63,8 +63,6 @@ module.exports = function plugin(userConf) {
             plugin: conf.pluginFieldName,
             response: 200
           });
-          fs.unlink(source, () => {
-          });
           logger.info('Uploaded file.', conf.pluginFieldName);
         })
         .catch((err) => {
@@ -77,6 +75,7 @@ module.exports = function plugin(userConf) {
         })
         .finally(() => {
           f_counter.dec();
+          fs.unlink(source, () => {});
           ftp.close();
           next();
         });
