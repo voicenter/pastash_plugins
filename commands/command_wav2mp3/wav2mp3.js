@@ -6,7 +6,8 @@ const pmx = require('pmx');
 
 let conf;
 const defaultConf = {
-  pluginFieldName: 'Wav2mp3'
+  pluginFieldName: 'Wav2mp3',
+  sampleRate: '8000'
 };
 
 module.exports = function plugin(userConf) {
@@ -35,7 +36,7 @@ module.exports = function plugin(userConf) {
         .then(() => {
           f_counter.inc();
           return new Promise((resolve, reject) => {
-            exec("sox -t wav -r 8000 -c 1 " + source + " -t mp3 " + destination, (err, stdr, stde) => {
+            exec("sox -t wav -r " + conf.sampleRate + " -c 1 " + source + " -t mp3 " + destination, (err, stdr, stde) => {
               if (err) {
                 reject(err);
               }
