@@ -22,13 +22,13 @@ function checksum(str, algorithm, encoding) {
 
 function saveObjectToFile(bucket, key, path) {
   return new BluebirdPromise(function (resolve, reject) {
-    var s3 = new AWS.S3();
-    var params = { Bucket: bucket, Key: key };
-    var writeStream = fs.createWriteStream(path);
-    var res = {
+    let s3 = new AWS.S3();
+    let params = { Bucket: bucket, Key: key };
+    let writeStream = fs.createWriteStream(path);
+    let res = {
       etag: null,
       length: null
-    }
+    };
 
     s3.getObject(params).on('httpHeaders', function (statusCode, headers) {
       if (headers.etag) {
@@ -46,12 +46,12 @@ function saveObjectToFile(bucket, key, path) {
         reject('Writestream to ' + path + ' did not finish successfully: ' + err);
       });
   });
-};
+}
 
 function deleteObject(bucket, key) {
   return new BluebirdPromise(function (resolve, reject) {
-    var s3 = new AWS.S3();
-    var params = { Bucket: bucket, Key: key };
+    let s3 = new AWS.S3();
+    let params = { Bucket: bucket, Key: key };
 
     s3.deleteObject(params, function (error, data) {
       if (error) {
@@ -62,7 +62,7 @@ function deleteObject(bucket, key) {
       }
     });
   });
-};
+}
 
 module.exports = function plugin(userConf) {
   conf = { ...defaultConf, ...userConf };
@@ -75,10 +75,14 @@ module.exports = function plugin(userConf) {
       secretAccessKey: conf['buckets'][data[conf.bucketField]].secretAccessKey
     });
 
-    saveObjectToFile(data[conf.bucketField], data[conf.nameField], data[conf.outputFileField] + data[conf.nameField]).then((res) => {
+    saveObjectToFile(data[conf.bucketField], data[conf.nameField], data[conf.outputFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField]).then((res) => {
       const remoteMd5 = res.etag.replace(/"/g, '');
 
-      fs.readFile(data[conf.outputFileField] + data[conf.nameField], function (err, resFile) {
+      fs.readFile(data[conf.outputFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField], function (err, resFile) {
+
+        if (err) {
+          throw err;
+        }
 
         if (!remoteMd5) {
           throw 'cannot get remote md5';
@@ -93,7 +97,7 @@ module.exports = function plugin(userConf) {
     }).catch((err) => {
       console.log(err, 'file fetch error');
     });
-  }
+  };
 
   this.main.s3Delete = function s3Fetch(next) {
     const data = this.data[conf.pluginFieldName];
@@ -110,4 +114,4 @@ module.exports = function plugin(userConf) {
     });
   }
 
-}
+};
