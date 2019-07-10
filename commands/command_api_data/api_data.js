@@ -27,6 +27,7 @@ module.exports = function plugin(userConf) {
     let apiData = '';
 
     let token = jwt.sign({
+      exp: Math.floor(Date.now() / 1000) + (60 * 10),
       account: data[conf.extraParam1Field],
       from: conf.from
     }, conf.jwtSecret);
