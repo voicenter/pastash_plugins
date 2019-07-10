@@ -45,7 +45,7 @@ module.exports = function plugin(userConf) {
 
       res.on('end', () => {
         let apiDataValue = JSON.parse(apiData);
-        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue[data[conf.apiValueField]];
+        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue;
         this.data.Result.push({
           plugin: conf.pluginFieldName,
           response: 200
