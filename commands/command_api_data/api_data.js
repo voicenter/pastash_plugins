@@ -6,6 +6,8 @@ const http = require('http');
 const https = require('https');
 const { URL } = require('url');
 const pmx = require('pmx');
+const jwt = require('jsonwebtoken');
+
 let conf;
 const defaultConf = {
   pluginFieldName: 'APIData'
@@ -25,12 +27,14 @@ module.exports = function plugin(userConf) {
     f_counter.inc();
     let apiData = '';
 
-    // ToDo: Implement different auth methods (sid, jwt...)
+    let token = jwt.sign({
+      account: data[conf.accountIdField],
+      from: conf.from
+    }, conf.jwtSecret);
 
     let apiUrl = new URL(data[conf.apiUrlField]);
-    apiUrl.searchParams.append('api-key', data[conf.apiKeyField]);
     let headers = {
-      "Authorization": "Bearer " + data[conf.apiKeyField]
+      "Authorization": "Bearer " + token
     };
 
     let connection = (apiUrl.protocol === 'https:') ? https : http;

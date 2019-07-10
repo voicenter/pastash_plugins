@@ -7,11 +7,12 @@ Config example:
 ````
 "@voicenter/voicenter_pastash_command_cryptofile": {
     "pluginFieldName": "APIData",
-    "apiKeyField": "apiKey",
     "apiUrlField": "apiUrl",
     "apiValueField": "apiValueKey",
     "forPluginNameField": "pluginName",
-    "forPluginDataNameField": "pluginData"
+    "forPluginDataNameField": "pluginData",
+    "jwtSecret": "shhhhh",
+    "accountIdField": "accountId"
 }
 ````
 
