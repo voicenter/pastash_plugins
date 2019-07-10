@@ -5,6 +5,8 @@
 
 const encryptor = require('file-encryptor');
 const pmx = require('pmx');
+const fs = require('fs');
+
 let conf;
 const defaultConf = {
   algorithm: 'aes256',
