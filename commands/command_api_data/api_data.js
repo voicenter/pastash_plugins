@@ -20,7 +20,6 @@ module.exports = function plugin(userConf) {
   let f_counter = probe.counter({
     name: 'API Data connector'
   });
-  const options = {};
 
   this.main.getParameter = function getParameter(next) {
     const data = this.data[conf.pluginFieldName];
@@ -28,7 +27,7 @@ module.exports = function plugin(userConf) {
     let apiData = '';
 
     let token = jwt.sign({
-      account: data[conf.accountIdField],
+      account: data[conf.extraParam1Field],
       from: conf.from
     }, conf.jwtSecret);
 
@@ -46,7 +45,7 @@ module.exports = function plugin(userConf) {
 
       res.on('end', () => {
         let apiDataValue = JSON.parse(apiData);
-        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = apiDataValue[data[conf.apiValueField]];
+        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue[data[conf.apiValueField]];
         this.data.Result.push({
           plugin: conf.pluginFieldName,
           response: 200

@@ -11,8 +11,9 @@ Config example:
     "apiValueField": "apiValueKey",
     "forPluginNameField": "pluginName",
     "forPluginDataNameField": "pluginData",
-    "jwtSecret": "shhhhh",
-    "accountIdField": "accountId"
+    "extraParam1Field": "accountId",
+    "extraParam2Field": "uniqueIvr",
+    "jwtSecret": "shhhhh"
 }
 ````
 
