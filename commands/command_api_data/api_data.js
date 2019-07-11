@@ -33,6 +33,7 @@ module.exports = function plugin(userConf) {
     }, conf.jwtSecret);
 
     let apiUrl = new URL(data[conf.apiUrlField]);
+    apiUrl.searchParams.append('accountId', data[conf.extraParam1Field]);
     let headers = {
       "Authorization": "Bearer " + token
     };
@@ -46,11 +47,19 @@ module.exports = function plugin(userConf) {
 
       res.on('end', () => {
         let apiDataValue = JSON.parse(apiData);
-        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue.key;
-        this.data.Result.push({
-          plugin: conf.pluginFieldName,
-          response: 200
-        });
+        if (apiData.hasOwnProperty('key')) {
+          this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue.key;
+          this.data.Result.push({
+            plugin: conf.pluginFieldName,
+            response: 200
+          });
+        } else {
+          delete(this.data._operationId);
+          this.data.Result.push({
+            plugin: conf.pluginFieldName,
+            response: 400
+          });
+        }
         f_counter.dec();
         next();
       });
