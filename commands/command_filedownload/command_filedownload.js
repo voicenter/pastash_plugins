@@ -57,7 +57,10 @@ module.exports = function plugin(userConf) {
         })
         .then((filesInfo) => {
           if (parseInt(filesInfo[1]) !== parseInt(filesInfo[0].size)) {
-            throw new Error('Downloading by ftp: File size does not match original.');
+            throw new Error(
+              'Downloading by ftp: File size does not match original. ' +
+              parseInt(filesInfo[1]) + ' !== ' + parseInt(filesInfo[0].size)
+            );
           }
           this.data.Result.push({
             plugin: conf.pluginFieldName,
