@@ -27,7 +27,7 @@ module.exports = function plugin(userConf) {
     let apiData = '';
 
     let token = jwt.sign({
-      exp: Math.floor(Date.now() / 1000) + (60 * 10),
+      exp: Math.floor(Date.now() / 1000) + (60 * 10), // 10 min exp
       account: data[conf.extraParam1Field],
       from: conf.from
     }, conf.jwtSecret);
@@ -46,7 +46,7 @@ module.exports = function plugin(userConf) {
 
       res.on('end', () => {
         let apiDataValue = JSON.parse(apiData);
-        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue;
+        this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue.key;
         this.data.Result.push({
           plugin: conf.pluginFieldName,
           response: 200
