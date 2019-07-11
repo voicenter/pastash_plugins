@@ -47,7 +47,7 @@ module.exports = function plugin(userConf) {
 
       res.on('end', () => {
         let apiDataValue = JSON.parse(apiData);
-        if (apiData.hasOwnProperty('key')) {
+        if (apiDataValue.hasOwnProperty('key')) {
           this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue.key;
           this.data.Result.push({
             plugin: conf.pluginFieldName,
