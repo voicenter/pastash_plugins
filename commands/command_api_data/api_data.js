@@ -26,20 +26,32 @@ module.exports = function plugin(userConf) {
     f_counter.inc();
     let apiData = '';
 
-    let token = jwt.sign({
-      exp: Math.floor(Date.now() / 1000) + (60 * 10), // 10 min exp
-      account: data[conf.extraParam1Field],
-      from: conf.from
-    }, conf.jwtSecret);
+    // Build JWT from config
+    let jwtConfig = {};
 
+    Object.entries(conf.jwtConfig).forEach(([type, value]) => {
+      if (value.hasOwnProperty('variable')) {
+        jwtConfig[type] = data[value.variable];
+      }
+      if (value.hasOwnProperty('value')) {
+        jwtConfig[type] = value.value;
+      }
+    });
+
+    jwtConfig.exp = Math.floor(Date.now() / 1000) + (60 * 10); // 10 min exp
+
+    let token = jwt.sign(jwtConfig, conf.jwtSecret);
+
+    // Set JWT header
     let apiUrl = new URL(data[conf.apiUrlField]);
-    apiUrl.searchParams.append('accountId', data[conf.extraParam1Field]);
     let headers = {
       "Authorization": "Bearer " + token
     };
 
+    //Detect protocol
     let connection = (apiUrl.protocol === 'https:') ? https : http;
 
+    //Send API request
     connection.get(apiUrl.href, { headers: headers }, (res) => {
       res.on('data', (chunk) => {
         apiData += chunk;
@@ -47,8 +59,9 @@ module.exports = function plugin(userConf) {
 
       res.on('end', () => {
         let apiDataValue = JSON.parse(apiData);
+        // ToDo: add some flexibility, get rid of hardcoded 'key'
         if (apiDataValue.hasOwnProperty('key')) {
-          this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParam2Field] + apiDataValue.key;
+          this.data[data[conf.forPluginNameField]][data[conf.forPluginDataNameField]] = data[conf.extraParamField] + apiDataValue.key;
           this.data.Result.push({
             plugin: conf.pluginFieldName,
             response: 200
