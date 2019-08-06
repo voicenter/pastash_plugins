@@ -1,0 +1,14 @@
+{
+  "name": "@pastash/command_smtp",
+  "version": "1.0.8",
+  "description": "Command SMTP for PaStash Commands",
+  "main": "command_smtp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "nodemailer": "^6.2.1"
+  }
+}
