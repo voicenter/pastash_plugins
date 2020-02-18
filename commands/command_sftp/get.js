@@ -24,8 +24,8 @@ module.exports = function plugin(userConf) {
     name: 'Downloading files by sftp'
   });
 
-  this.main.sftpGeFile = function sftpGeFile(next) {
-    const data = this.data[conf.pluginFieldName];
+  this.main.sftpGetFile = function sftpGetFile(next) {
+    let data = this.data[conf.pluginFieldName];
 
     if (data.hasOwnProperty(conf.inputFileField)) {
       let source = data[conf.inputFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField];
