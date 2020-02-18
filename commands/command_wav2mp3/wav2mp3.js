@@ -21,9 +21,9 @@ module.exports = function plugin(userConf) {
   this.main.wav2mp3Convert = function wav2mp3Convert(next) {
     const data = this.data[conf.pluginFieldName];
 
-    if ((data.hasOwnProperty(conf.inputFileField) && data.hasOwnProperty(conf.outputFileField)) || conf.defaultFilePath) {
-      let source      = ((data.hasOwnProperty(conf.inputFileField)) ? data[conf.inputFileField].replace(/\/$/ig, '') : conf.defaultFilePath) + "/" + data[conf.inputNameField];
-      let destination = (data.hasOwnProperty(conf.outputFileField) ? data[conf.outputFileField].replace(/\/$/ig, '') : conf.defaultFilePath) + '/' + data[conf.outputNameField];
+    if ((data.hasOwnProperty(conf.inputFileField) || conf.defaultSourceFilePath) && (data.hasOwnProperty(conf.outputFileField) || conf.defaultDestFilePath)) {
+      let source      = ((data.hasOwnProperty(conf.inputFileField)) ? data[conf.inputFileField].replace(/\/$/ig, '') : conf.defaultSourceFilePath) + "/" + data[conf.inputNameField];
+      let destination = (data.hasOwnProperty(conf.outputFileField) ? data[conf.outputFileField].replace(/\/$/ig, '') : conf.defaultDestFilePath) + '/' + data[conf.outputNameField];
 
       new Promise((resolve, reject) => {
         fs.access(source, fs.constants.R_OK, (err) => {
