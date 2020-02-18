@@ -8,6 +8,7 @@ Config example:
     "inputFileField": "downloadSourceFilePath", // Input file path for download. 
     "outputFileField": "downloadDestFilePath",  // Output file path for download.
     "nameField": "fileName", // File name input field name
+    "defaultDestFilePath": "/Users/maksim/proj/voicestash", // Default download path
     
     // FTP params
     "host": "host",
@@ -15,6 +16,11 @@ Config example:
     "password": "password",
     "port": "port",
     "secure": true
+        
+    // SFTP params
+    "host": "host",
+    "usarname": "usarname",
+    "password": "password"
 }
 ````
 
