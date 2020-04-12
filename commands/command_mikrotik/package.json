@@ -1,0 +1,15 @@
+{
+  "name": "@pastash/command_mikrotik",
+  "version": "1.0.1",
+  "description": "Command Chain for PaStash Mikrotik support",
+  "main": "command_mikrotik.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "circular-json": "^0.5.9",
+    "node-routeros": "^1.6.6"
+  },
+  "author": "Shlomi Gutman",
+  "license": "MIT"
+}
