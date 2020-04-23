@@ -6,6 +6,7 @@ Config example:
 "@voicenter/voicenter_pastash_command_fileupload": {
     "pluginFieldName": "FileTransferDown",  // Host parameter name for particular plugin
     "inputFileField": "downloadSourceFilePath", // Input file path for download. 
+    "inputMvFileField": "moveToSourceFilePath", // Move remote file to. 
     "outputFileField": "downloadDestFilePath",  // Output file path for download.
     "nameField": "fileName", // File name input field name
     "defaultDestFilePath": "/Users/maksim/proj/voicestash", // Default download path
@@ -31,6 +32,7 @@ Example of JSON payload for such configuration in case of 'field' parameter of P
   "Command": {
     "FileTransferDown": {
       "downloadSourceFilePath": "/remote/path",
+      "moveToSourceFilePath": "/remote/another/path",
       "downloadDestFilePath": "/local/path",
       "fileName": "file.name"
     }
