@@ -96,9 +96,9 @@ module.exports = function plugin(userConf) {
 
         if (data.hasOwnProperty(conf.inputFileField)) {
             let source = data[conf.inputFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField];
-            let sourceMv = (data.hasOwnProperty(conf.inputMvFileField) && data[conf.inputMvFileField].length > 0)
-                ? data[conf.inputMvFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField]
-                : null;
+            let sourceMv = (data.hasOwnProperty(conf.inputMvFileField) && data[conf.inputMvFileField].length > 0) ?
+                data[conf.inputMvFileField].replace(/\/$/ig, '') + '/' + data[conf.nameField] :
+                null;
             let destination = (data[conf.outputFileField].replace(/\/$/ig, '') || conf.defaultDestFilePath) + '/' + data[conf.nameField];
             // ToDo: Private Key
             let sftp = new SFTPClient({
