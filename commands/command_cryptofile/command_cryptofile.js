@@ -41,7 +41,7 @@ module.exports = function plugin(userConf) {
   this.main.encryptFile = function encryptFile(next) {
     const data = this.data[conf.pluginFieldName];
     f_counter.inc();
-    encryptor.encryptFile(data[conf.inputFileField], data[conf.outputFileField], data[conf.keyField], options, (err) => {
+    encryptor.encryptFile(data[conf.inputFileField], data[conf.outputFileField], data[conf.keyField], data[conf.ivField], options, (err) => {
       _done.bind(this)(err, next);
     });
   };
@@ -49,7 +49,7 @@ module.exports = function plugin(userConf) {
   this.main.decryptFile = function decryptFile(next) {
     const data = this.data[conf.pluginFieldName];
     f_counter.inc();
-    encryptor.decryptFile(data[conf.inputFileField], data[conf.outputFileField], data[conf.keyField], options, (err) => {
+    encryptor.decryptFile(data[conf.inputFileField], data[conf.outputFileField], data[conf.keyField], data[conf.ivField], options, (err) => {
       _done.bind(this)(err, next);
     });
   };

@@ -8,6 +8,7 @@ Config example:
     "inputFileField": "sourceFilePath",
     "outputFileField": "destFilePath",
     "keyField": "key",
+    "ivField": "iv",
     "algorithm": "aes256"
 }
 ````

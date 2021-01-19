@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "file-encryptor": "^0.1.1",
+    "file-encryptor": "MaxKirillov/file-encryptor",
     "pmx": "^1.6.7"
   }
 }
